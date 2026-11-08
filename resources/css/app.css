@@ -1,0 +1,333 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Public site and admin share one palette. Values follow the brief:
+   light  bg #FFFFFF / surface #F8FAFC / text #111827 / muted #64748B / accent #2563EB
+   dark   bg #111827 / surface #1F2937 / text #F9FAFB / muted #CBD5E1 / accent #60A5FA
+   ------------------------------------------------------------------ */
+@theme inline {
+    --font-sans:
+        Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-mono:
+        ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, Consolas,
+        monospace;
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-surface: var(--surface);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-brand: var(--brand);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    --background: #ffffff;
+    --foreground: #111827;
+    --surface: #f8fafc;
+    --card: #ffffff;
+    --card-foreground: #111827;
+    --popover: #ffffff;
+    --popover-foreground: #111827;
+    --primary: #2563eb;
+    --primary-foreground: #ffffff;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #111827;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #f1f5f9;
+    --accent-foreground: #111827;
+    --brand: #2563eb;
+    --success: #15803d;
+    --warning: #b45309;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #cbd5e1;
+    --ring: #2563eb;
+    --chart-1: #2563eb;
+    --chart-2: #0d9488;
+    --chart-3: #7c3aed;
+    --chart-4: #d97706;
+    --chart-5: #db2777;
+    --radius: 0.5rem;
+    --sidebar-background: #f8fafc;
+    --sidebar-foreground: #334155;
+    --sidebar-primary: #111827;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #eef2f7;
+    --sidebar-accent-foreground: #111827;
+    --sidebar-border: #e2e8f0;
+    --sidebar-ring: #2563eb;
+    --sidebar: #f8fafc;
+}
+
+.dark {
+    --background: #111827;
+    --foreground: #f9fafb;
+    --surface: #1f2937;
+    --card: #1f2937;
+    --card-foreground: #f9fafb;
+    --popover: #1f2937;
+    --popover-foreground: #f9fafb;
+    --primary: #60a5fa;
+    --primary-foreground: #0b1220;
+    --secondary: #273244;
+    --secondary-foreground: #f9fafb;
+    --muted: #273244;
+    --muted-foreground: #cbd5e1;
+    --accent: #273244;
+    --accent-foreground: #f9fafb;
+    --brand: #60a5fa;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --destructive: #f87171;
+    --destructive-foreground: #111827;
+    --border: #334155;
+    --input: #475569;
+    --ring: #60a5fa;
+    --chart-1: #60a5fa;
+    --chart-2: #2dd4bf;
+    --chart-3: #a78bfa;
+    --chart-4: #fbbf24;
+    --chart-5: #f472b6;
+    --sidebar-background: #0f1623;
+    --sidebar-foreground: #cbd5e1;
+    --sidebar-primary: #f9fafb;
+    --sidebar-primary-foreground: #111827;
+    --sidebar-accent: #1f2937;
+    --sidebar-accent-foreground: #f9fafb;
+    --sidebar-border: #1f2937;
+    --sidebar-ring: #60a5fa;
+    --sidebar: #0f1623;
+}
+
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-border);
+    }
+
+    * {
+        @apply outline-ring/50;
+    }
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        scroll-padding-top: 5rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: 'cv11', 'ss01';
+        text-rendering: optimizeLegibility;
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--brand) 25%, transparent);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+/* ------------------------------------------------------------------
+   Typography scale and layout primitives for the public site
+   ------------------------------------------------------------------ */
+@layer components {
+    .container-site {
+        @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    }
+
+    .text-display {
+        font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+        font-weight: 650;
+    }
+
+    .text-title {
+        font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+        line-height: 1.15;
+        letter-spacing: -0.025em;
+        font-weight: 620;
+    }
+
+    .text-lead {
+        font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+        line-height: 1.65;
+    }
+
+    .eyebrow {
+        @apply font-mono text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase;
+    }
+
+    .link-underline {
+        @apply underline decoration-border decoration-1 underline-offset-4 transition-colors hover:decoration-current;
+    }
+
+    .chip {
+        @apply inline-flex items-center rounded-md border border-border bg-surface px-2 py-0.5 text-xs font-medium text-foreground/80;
+    }
+
+    /* Rendered Markdown (server-sanitised). */
+    .prose-content {
+        @apply text-[1.0625rem] leading-[1.75] text-foreground/85;
+    }
+    .prose-content > * + * {
+        margin-top: 1em;
+    }
+    .prose-content h2 {
+        @apply mt-10 text-2xl font-semibold tracking-tight text-foreground;
+    }
+    .prose-content h3 {
+        @apply mt-8 text-xl font-semibold tracking-tight text-foreground;
+    }
+    .prose-content h4 {
+        @apply mt-6 font-semibold text-foreground;
+    }
+    .prose-content a {
+        @apply font-medium text-brand underline underline-offset-4;
+    }
+    .prose-content strong {
+        @apply font-semibold text-foreground;
+    }
+    .prose-content ul {
+        @apply list-disc pl-5;
+    }
+    .prose-content ol {
+        @apply list-decimal pl-5;
+    }
+    .prose-content li + li {
+        margin-top: 0.4em;
+    }
+    .prose-content li::marker {
+        color: var(--muted-foreground);
+    }
+    .prose-content blockquote {
+        @apply border-l-2 border-brand pl-4 text-foreground/75 italic;
+    }
+    .prose-content code {
+        @apply rounded bg-muted px-1.5 py-0.5 font-mono text-[0.875em] text-foreground;
+    }
+    .prose-content pre {
+        @apply overflow-x-auto rounded-lg border border-border bg-surface p-4 font-mono text-sm leading-relaxed;
+    }
+    .prose-content pre code {
+        @apply bg-transparent p-0 text-[0.875rem];
+    }
+    .prose-content hr {
+        @apply my-10 border-border;
+    }
+    .prose-content table {
+        @apply w-full border-collapse text-sm;
+    }
+    .prose-content th,
+    .prose-content td {
+        @apply border border-border px-3 py-2 text-left;
+    }
+    .prose-content th {
+        @apply bg-surface font-semibold text-foreground;
+    }
+    .prose-content img {
+        @apply rounded-lg border border-border;
+    }
+    .prose-content > :first-child {
+        margin-top: 0;
+    }
+}
+
+/* Reveal-on-scroll (progressive enhancement; content is visible without JS). */
+.reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    html,
+    body {
+        background: #fff !important;
+        color: #111827 !important;
+    }
+    a {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+}
